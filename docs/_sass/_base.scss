@@ -102,7 +102,7 @@ aside {
                     color: $theme-primary !important;
                     background-color: transparent;
                     text-decoration: underline;
-                    text-decoration-color:#313896 !important; 
+                    text-decoration-color:$theme-primary !important;
                     text-decoration-thickness: 3px;
                     text-decoration-style: solid;
                     &:hover {
