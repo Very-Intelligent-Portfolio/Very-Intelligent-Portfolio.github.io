@@ -30,7 +30,7 @@
                 <h2 class="section-heading">Data Pipeline</h2>
                 <hr class="light">
                 <p class="text-faded">Our data pipeline on the primary dataset CRSP involves a multi-stage cleaning and preprocessing to remove incomplete records and outliers, create additional features and labels, and prepare the data in the format our model expects. The resulting dataset contains 1 date column, 1 unique security identifier (Permno ID) column, 5 feature columns, and 11 label columns.</p>
-                <img src="img/pipeline/crsp.jpg" id="center_large" alt="">
+                <img src="img/pipeline/crsp.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
                 <p class="text-faded">Our data pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
                 <img src="img/pipeline/compustat.jpg" id="center_large" alt="">
             </div>
@@ -46,7 +46,7 @@
             <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Product</h2>
                 <hr class="light">
-                <p class="text-faded">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. </p>
+                <p class="text-faded">Using our datasets and models, with our users in mind, we created the first prototype of Very Intelligent Portfolio (VIP). The first prototype is accessible through a Google Colab Jupyter Notebook environment, where the user can import their current portfolio holdings in a csv format, specifying their sellable and non-sellable assets, restricted & preferred stocks, and risk tolerance. The backend API, hosted in Azure secure cloud, ingests the inputs to provide personalized recommendations, detailing which stocks to buy or sell and in what quantities, also offering return and volatility comparisons against current holdings and index funds and a brief summary of the recommendations.</p>
             </div>
         </div>
         <div class="row" id="add-bottom">
