@@ -27,6 +27,22 @@ a {
     }
 }
 
+a.dark {
+    @include transition-all;
+    color: rgba(white, .7);
+    text-decoration: underline;
+    &:hover,
+    &:focus {
+        color: darken(rgba(white, .7), 10%);
+    }
+}
+
+img.center {
+    width: 30%;
+    margin-bottom: 20px;
+}
+
+
 h1,
 h2,
 h3,
