@@ -27,17 +27,7 @@ a {
     }
 }
 
-a.dark {
-    @include transition-all;
-    color: rgba(white, .7);
-    text-decoration: underline;
-    &:hover,
-    &:focus {
-        color: darken(rgba(white, .7), 10%);
-    }
-}
-
-img.center {
+img#center {
     width: 30%;
     margin-bottom: 20px;
 }
