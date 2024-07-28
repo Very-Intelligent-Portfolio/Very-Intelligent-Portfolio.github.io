@@ -24,9 +24,13 @@
                 <hr class="light">
                 <h2 class="section-heading">Data Pipeline</h2>
                 <hr class="light" id="add-bottom">
-                <p class="text-faded">Our data pipeline on the primary dataset CRSP involves a multi-stage cleaning and preprocessing to remove incomplete records and outliers, create additional features and labels, and prepare the data in the format our model expects. The resulting dataset contains 1 date column, 1 unique security identifier (Permno ID) column, 5 feature columns, and 11 label columns.</p>
-                <img src="img/pipeline/crsp.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
-                <p class="text-faded">Our data pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
+                <p class="text-faded">Below is an overview of our overall pipeline. We start with raw CRSP dataset which contains the daily stock market information for more than 7,000 stocks from 2018 to 2023. 
+                Performed a series of data cleaning by removing or imputing invalid values and keeping only stocks in S&P500.
+                Performed feature engineering to create 9 numerical features, 1 categorical feature, and 5 temporal features, by using the past 128 days data as features and the next day's return as target.
+                However, it is worth noting that even though our target is next day’s return, this is simply a mechanism in which we use to extract the embeddings associated with each stock, our measurement of success is not on how accurate the prediction itself is, but rather on the quality of the embeddings & the cosine similarities calculated using those embeddings.
+                </p>
+                <img src="img/pipeline/pipeline.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+                <p class="text-faded">Even though we did not get to use the Compustat dataset in the current phase, we did prepare the dataset for future works, the pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
                 <img src="img/pipeline/compustat.jpg" id="center_large" alt="">
             </div>
         </div>
@@ -35,9 +39,77 @@
         <div class="row" id="add-bottom">
             <div class="col-lg-12 text-center">
                 <hr class="light">
-                <h2 class="section-heading">Model</h2>
+                <h2 class="section-heading">Model Architecture</h2>
                 <hr class="light" id="add-bottom">
-                <p class="text-faded">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. </p>
+                <p class="text-faded">Our model employs a simple architecture as pictured below. We separated our data to numerical features vs categorical features. 
+                Numerical features are directly passed to multiple multi-headed self-attention layers whereas the categorical features is first pass through an embedding layer to generate the static embeddings associated with each permno, before being passed to multiple multi-headed self-attention layers.
+                The learned representations from both the numerical & embedding features are concatenated to produce the final prediction.
+                As mentioned before, we, however, do not use the predictions for the downstream task, and only use the learned embeddings from the embedding layer for portfolio optimization.
+                </p>
+                <img src="img/pipeline/model.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12 text-center">
+                <hr class="light">
+                <h2 class="section-heading">Model Experiments</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">We experimented both in terms of data and in terms of the model architecture & hyperparameter tuning.
+                During training, we considered both standardization and MinMax scaling and concluded MinMax scaling made more sense due to the large difference in scales among different features.
+                We also experimented using log vs normal return, as literatures show conflicting recommendations, we ended up using the normal return based on training experimental results.
+                We further considered adding additional categorical features and removing some numerical features, and noted the most important feature in addition to permno is the daily return.
+                For the model experiments, although we did not perform a systematic ablation study, we did experiment with different hyperparameter settings and selected our final model based on model performance by observing the learning curve and the final loss.
+                </p>
+                <img src="img/pipeline/experiments.jpg" id="center_small" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12 text-center">
+                <hr class="light">
+                <h2 class="section-heading">Model Results</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">We trained our model for 10 epochs and observed the learning curves and monitored the metrics. We used Mean Absolute Error (MAE) as our loss and Root Mean Squared Error (RMSE) as our metric. We can see that both train and validation results show promising progression throughout training.</p>
+                <img src="img/pipeline/evaluation.jpg" id="center_small" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12 text-center">
+                <hr class="light">
+                <h2 class="section-heading">Cosine Similarities</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">After the training is completed, we extracted the embeddings for each stock and calculated the cosine similarities among all stocks. Below is an example of the cosine similarities for the first 20 stocks in the dataset.
+                We noted some stocks show negative cosine similarities, which we understand to be unlikely due to the nature of the stock market, but still possible due to competitions and volatility, something we intend to tackle in future iterations. 
+                This cosine similarity matrix replaces the traditional correlation matrix used in portfolio optimization to generate portfolio recommendations by balancing the maximum sharpe ratio and the minimum variance.
+                </p>
+                <img src="img/pipeline/cosine.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12 text-center">
+                <hr class="light">
+                <h2 class="section-heading">Clustering</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">To better visualize the cosine similarities among the stocks, we utilized Principle Components Analaysis (PCA) and t-distributed Stochastic Neighbor Embedding (t-SNE) as the dimensionality reduction technique to visualize the consine similarities among securities on a 2-dimensional space.
+                Here we show the results for two industries, biomedical and financial services industries.
+                We can see a clear clustering pattern in the biomedical sector and some clustering pattern in the financial services sector. Based on our domain expertise, we also reason that the clustering results in the financial services sector is reasonable, since the companies on the left side outside of the cluster, for example KEY, uses a very different operating model and revenue strategy than those inside the cluster on the right side.
+                We also reason that we only used the stock market movements to train our model, and using additional data could yield different results. It is also possible that sector is not the best indicator for clustering. It could be that the companies in the same sector moves in opposite directions in the market due to competition so they are actually more different than companies in different sectors that complement each other.
+                </p>
+                <img src="img/pipeline/cluster.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+    </div>
+    <div class="container" id="futureworks">
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12 text-center">
+                <hr class="light">
+                <h2 class="section-heading">Future Works</h2>
+                <hr class="light" id="add-bottom">
+                <ul class="text-faded list-unstyled">
+                    <li><p>Use mode advanced architecture, such as Transformers, to generate contextual embeddings.</p></li>
+                    <li><p>Generate more robust cosine similarities by incorporating additional features, such as financials, footnotes, and market sentiments.</p></li>
+                    <li><p>Expand our trained embeddings to incorporate stocks outside of S&P500.</p></li>
+                    <li><p>Utilize GenAI to generate natural language output accompanying the numerical results for easier interpretation.</p></li>
+                </ul>
             </div>
         </div>
     </div>
