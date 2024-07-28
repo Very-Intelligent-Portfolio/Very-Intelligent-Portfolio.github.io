@@ -27,6 +27,16 @@ a {
     }
 }
 
+a.dark {
+    @include transition-all;
+    color: white;
+    &:hover,
+    &:focus {
+        color: darken(white, 20%);
+    }
+}
+
+
 img#center_cap {
     width: 16%;
     margin-bottom: 20px;

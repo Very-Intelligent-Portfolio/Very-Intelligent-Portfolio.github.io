@@ -9,50 +9,33 @@
         </div>
         <div class="row" id="add-bottom">
             <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Data</h2>
-                <hr class="light">
-                <p class="text-faded">Our data is accessed from Wharton Research Data Services (WRDS), as provided by The Wharton School, University of Pennsylvania. We would like to thank Haas School of Business, University of California Berkeley for providing us access to this rich database.</p>
-                <a href="https://wrds-www.wharton.upenn.edu/">
-                    <img src="img/logo/wrds.jpg" id="center_small" alt="">
-                </a>
-                <p class="text-faded">Our primary dataset is the CRSP Daily Stock Dataset provided by Center For Research in Security Prices, LLC (CRSP). This dataset contains the daily US market data for all active and inactive securities with primary listings on the NYSE, NYSE American, NASDAQ, NYSE Arca and Cboe BZX exchanges. Key variables include the security identification information, price, return, shares outstanding, volume, and other security level meta information. We sourced the data for all years beginning January 1st, 2019, ending December 31st, 2023.</p>
-                <a href="https://www.crsp.org/">
-                    <img src="img/logo/crsp.jpg" id="center_small" alt="">
-                </a>
-                <p class="text-faded">Our secondary dataset is the Compustat Daily Updates - Fundamentals Quarterly Dataset provided by S&P Global Market Intelligence Capital IQ. This dataset contains the quarterly financial fundamentals for publicly traded companies in the US. Key variables include the security identification information, total assets, total liabilities, retained earnings, sales, cost of goods sold, expenses, net income, common and preferred shares outstanding, and other security level meta information. We sourced the data as pre-merged with CRSP for all years beginning January 1st, 2018, ending December 31st, 2023.</p>
-                <a href="https://www.marketplace.spglobal.com/" id="dark">
-                    <img src="img/logo/compustat.jpg" id="center_small" alt="">
-                </a>
-            </div>
-        </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Data Pipeline</h2>
-                <hr class="light">
-                <p class="text-faded">Our data pipeline on the primary dataset CRSP involves a multi-stage cleaning and preprocessing to remove incomplete records and outliers, create additional features and labels, and prepare the data in the format our model expects. The resulting dataset contains 1 date column, 1 unique security identifier (Permno ID) column, 5 feature columns, and 11 label columns.</p>
-                <img src="img/pipeline/crsp.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
-                <p class="text-faded">Our data pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
-                <img src="img/pipeline/compustat.jpg" id="center_large" alt="">
-            </div>
-        </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
-                <h2 class="section-heading">Models</h2>
-                <hr class="light">
-                <p class="text-faded">Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. </p>
-            </div>
-        </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
                 <h2 class="section-heading">Product</h2>
                 <hr class="light">
                 <p class="text-faded">Using our datasets and models, with our users in mind, we created the first prototype of Very Intelligent Portfolio (VIP). The first prototype is accessible through a Google Colab Jupyter Notebook environment, where the user can import their current portfolio holdings in a csv format, specifying their sellable and non-sellable assets, restricted & preferred stocks, and risk tolerance. The backend API, hosted in Azure secure cloud, ingests the inputs to provide personalized recommendations, detailing which stocks to buy or sell and in what quantities, also offering return and volatility comparisons against current holdings and index funds and a brief summary of the recommendations.</p>
             </div>
         </div>
+        <div class="container" id="add-bottom">
+            <div class="row" id="add-bottom">
+                <div class="col-lg-6 col-md-8 text-center">
+                    <a href="/datamodel#data" class="service-box dark">
+                        <i class="fa fa-4x fa-solid fa-database wow bounceIn" data-wow-delay=".1s"></i>
+                        <h3>Data & Data Pipeline</h3>
+                        <p class="text-faded">Get to know our data & data pipeline!</p>
+                    </a>
+                </div>
+                <div class="col-lg-6 col-md-8 text-center">
+                    <a href="/datamodel#model" class="service-box dark">
+                        <i class="fa fa-4x fa-solid fa-diamond wow bounceIn" data-wow-delay=".2s"></i>
+                        <h3>ML Model & Architecture</h3>
+                        <p class="text-faded">Learn about our ML model & architectures!</p>
+                    </a>
+                </div>
+            </div>
+        </div>
         <div class="row" id="add-bottom">
             <div class="col-lg-12 text-center">
                 <a href="#demo" class="btn btn-default btn-xl page-scroll">See VIP in action!</a>
-                </div>
+            </div>
         </div>
     </div>
 </section>
