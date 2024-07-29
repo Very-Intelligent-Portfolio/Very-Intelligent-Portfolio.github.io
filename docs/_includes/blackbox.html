@@ -1,114 +1,165 @@
 <section class="bg-dark" id="blackbox">
+    <div class="container" id="stats">
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12">
+                <hr class="light">
+                <h2 class="section-heading text-center">Statistical Approach</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">For those who are just getting started in stock investments, here are some commonly used terms and its definition.</p>
+                <ul class="text-faded">
+                    <li class="left"><p><strong>PORTFOLIO: </strong>A portfolio is a collection of financial investments like stocks, bonds, commodities, cash, and cash equivalents, including closed-end funds and exchange-traded funds (ETFs). <a href="https://www.investopedia.com/terms/p/portfolio.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>DIVERSIFICATION: </strong>Diversification is the process of spreading investments across different asset classes, industries, and geographic regions to reduce the overall risk of an investment portfolio. The idea is that by holding a variety of investments, the poor performance of any one investment potentially can be offset by the better performance of another, leading to a more consistent overall return. Diversification thus aims to include assets that are not highly correlated with one another. <a href="https://www.investopedia.com/investing/importance-diversification/" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>RETURN: </strong>Return is the amount of money made or lost on an investment over some period of time. Commonly expressed as a percentage derived from the ratio of profit to investment. <a href="https://www.investopedia.com/terms/r/return.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>VOLATILITY: </strong>Volatility is a statistical measure of the dispersion of returns for a given security or market index. It is often measured from either the standard deviation or variance between those returns. In most cases, the higher the volatility, the riskier the security. <a href="https://www.investopedia.com/terms/v/volatility.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>RISK: </strong>Risk is the chance that an outcome or investment's actual gains will differ from an expected outcome or return. Risk includes the possibility of losing some or all of an original investment. <a href="https://www.investopedia.com/terms/r/risk.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>HEDGE: </strong>Hedging is a strategy that seeks to limit or offset risk in an investment or a portfolio of investments. Portfolio diversification is a type of hedge. <a href="https://www.investopedia.com/terms/h/hedge.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>CORRELATION: </strong>Correlation is a statistic that measures the degree (strength) to which two securities move in relation to each other, often calculated using the Pearson Correlation function. <a href="https://www.investopedia.com/terms/h/hedge.asp" class="faded">(Source)</a></p></li>
+                    <li class="left"><p><strong>COVARIANCE: </strong>Covariance is a statistical measure of the directional relationship between two asset returns. Investors can use this measurement to understand the relationship between two stock returns. This can be calculated using the correlation. <a href="https://www.investopedia.com/articles/financial-theory/11/calculating-covariance.asp" class="faded">(Source)</a></p></li>
+                </ul>
+                <p class="text-faded">One common statistical approach (also the one used for our baseline) is the efficient frontier model. Efficient frontier is the set of optimal portfolios that offer the highest expected return for a defined level of risk or the lowest risk for a given level of expected return. <a href="https://www.investopedia.com/terms/e/efficientfrontier.asp" class="faded">(Source)</a></p>
+                <p class="text-faded">Below is a visualization of the Efficient Frontier, where the x-axis is the volatility, the y-axis is the mean return, and the blue line is the efficient frontier as a function of the covariance between the stocks within a portfolio. The green dot represents the point in which the efficient frontier converges with the capital market, creating the optimal portfolio with the most optimal balance between return and volatility, this is also known as the Maximum Sharpe Portfolio.</p>
+                <p class="text-faded">We can see that to the right of the green dot, with each unit of increase in volatility, the increase in mean return is less than 1, indicating a more risky portfolio. On the other hand, to the left of the green dot, we see that with each unit increase in volatity, the mean return increases by more than 1, however, the mean return is not optimized (lower). The purple dot represents the Minimum Variance Portfolio, which is a portfolio that is more focused on minimizing risk than maximizing return.</p>
+                <div class="text-center"><img src="img/pipeline/stats.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+    </div>
     <div class="container" id="data">
         <div class="row" id="add-bottom">
             <div class="col-lg-12 text-center">
                 <hr class="light">
                 <h2 class="section-heading">Data</h2>
                 <hr class="light" id="add-bottom">
+            </div>
+            <div class="col-lg-8">
                 <p class="text-faded">Our data is accessed from Wharton Research Data Services (WRDS), as provided by The Wharton School, University of Pennsylvania. We would like to thank Haas School of Business, University of California Berkeley for providing us access to this rich database.</p>
+            </div>
+            <div class="col-lg-4 text-center">
                 <a href="https://wrds-www.wharton.upenn.edu/">
-                    <img src="img/logo/wrds.jpg" id="center_small" alt="">
-                </a>
-                <p class="text-faded">Our primary dataset is the CRSP Daily Stock Dataset provided by Center For Research in Security Prices, LLC (CRSP). This dataset contains the daily US market data for all active and inactive securities with primary listings on the NYSE, NYSE American, NASDAQ, NYSE Arca and Cboe BZX exchanges. Key variables include the security identification information, price, return, shares outstanding, volume, and other security level meta information. We sourced the data for all years beginning January 1st, 2019, ending December 31st, 2023.</p>
-                <a href="https://www.crsp.org/">
-                    <img src="img/logo/crsp.jpg" id="center_small" alt="">
-                </a>
-                <p class="text-faded">Our secondary dataset is the Compustat Daily Updates - Fundamentals Quarterly Dataset provided by S&P Global Market Intelligence Capital IQ. This dataset contains the quarterly financial fundamentals for publicly traded companies in the US. Key variables include the security identification information, total assets, total liabilities, retained earnings, sales, cost of goods sold, expenses, net income, common and preferred shares outstanding, and other security level meta information. We sourced the data as pre-merged with CRSP for all years beginning January 1st, 2018, ending December 31st, 2023.</p>
-                <a href="https://www.marketplace.spglobal.com/" id="dark">
-                    <img src="img/logo/compustat.jpg" id="center_small" alt="">
+                    <img src="img/logo/wrds.jpg" id="center_larger" alt="">
                 </a>
             </div>
+            <div class="col-lg-8">
+                <p class="text-faded">Our primary dataset is the CRSP Daily Stock Dataset provided by Center For Research in Security Prices, LLC (CRSP). This dataset contains the daily US market data for all active and inactive securities with primary listings on the NYSE, NYSE American, NASDAQ, NYSE Arca and Cboe BZX exchanges. Key variables include the security identification information, price, return, shares outstanding, volume, and other security level meta information. We sourced the data for all years beginning January 1st, 2018, ending December 31st, 2023.</p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <a href="https://wrds-www.wharton.upenn.edu/">
+                    <img src="img/logo/crsp.jpg" id="center_larger" alt="">
+                </a>
+            </div>
+            <div class="col-lg-8">
+                <p class="text-faded">Our secondary dataset is the Compustat Daily Updates - Fundamentals Quarterly Dataset provided by S&P Global Market Intelligence Capital IQ. This dataset contains the quarterly financial fundamentals for publicly traded companies in the US. Key variables include the security identification information, total assets, total liabilities, retained earnings, sales, cost of goods sold, expenses, net income, common and preferred shares outstanding, and other security level meta information. We sourced the data as pre-merged with CRSP for all years beginning January 1st, 2018, ending December 31st, 2023.</p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <a href="https://wrds-www.wharton.upenn.edu/">
+                    <img src="img/logo/compustat.jpg" id="center_larger" alt="">
+                </a>
+            </div>            
         </div>
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Data Pipeline</h2>
+                <h2 class="section-heading text-center">Data Pipeline</h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">Below is an overview of our overall pipeline. We start with raw CRSP dataset which contains the daily stock market information for more than 7,000 stocks from 2018 to 2023. 
                 Performed a series of data cleaning by removing or imputing invalid values and keeping only stocks in S&P500.
                 Performed feature engineering to create 9 numerical features, 1 categorical feature, and 5 temporal features, by using the past 128 days data as features and the next day's return as target.
                 However, it is worth noting that even though our target is next day’s return, this is simply a mechanism in which we use to extract the embeddings associated with each stock, our measurement of success is not on how accurate the prediction itself is, but rather on the quality of the embeddings & the cosine similarities calculated using those embeddings.
                 </p>
-                <img src="img/pipeline/pipeline.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+                <div class="text-center"><img src="img/pipeline/pipeline.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
                 <p class="text-faded">Even though we did not get to use the Compustat dataset in the current phase, we did prepare the dataset for future works, the pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
-                <img src="img/pipeline/compustat.jpg" id="center_large" alt="">
+                <div class="text-center"><img src="img/pipeline/compustat.jpg" id="center_larger" alt=""></div>
             </div>
         </div>
     </div>
     <div class="container" id="model">
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Model Architecture</h2>
+                <h2 class="section-heading text-center">Model Architecture</h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">Our model employs a simple architecture as pictured below. We separated our data to numerical features vs categorical features. 
                 Numerical features are directly passed to multiple multi-headed self-attention layers whereas the categorical features is first pass through an embedding layer to generate the static embeddings associated with each permno, before being passed to multiple multi-headed self-attention layers.
                 The learned representations from both the numerical & embedding features are concatenated to produce the final prediction.
                 As mentioned before, we, however, do not use the predictions for the downstream task, and only use the learned embeddings from the embedding layer for portfolio optimization.
                 </p>
-                <img src="img/pipeline/model.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+                <div class="text-center"><img src="img/pipeline/model.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Model Experiments</h2>
+                <h2 class="section-heading text-center">Model Experiments</h2>
                 <hr class="light" id="add-bottom">
+            </div>
+            <div class="col-lg-8">
                 <p class="text-faded">We experimented both in terms of data and in terms of the model architecture & hyperparameter tuning.
-                During training, we considered both standardization and MinMax scaling and concluded MinMax scaling made more sense due to the large difference in scales among different features.
-                We also experimented using log vs normal return, as literatures show conflicting recommendations, we ended up using the normal return based on training experimental results.
-                We further considered adding additional categorical features and removing some numerical features, and noted the most important feature in addition to permno is the daily return.
-                For the model experiments, although we did not perform a systematic ablation study, we did experiment with different hyperparameter settings and selected our final model based on model performance by observing the learning curve and the final loss.
-                </p>
-                <img src="img/pipeline/experiments.jpg" id="center_small" alt="" style="margin-bottom: 20px;">
+                    During training, we considered both standardization and MinMax scaling and concluded MinMax scaling made more sense due to the large difference in scales among different features.
+                    We also experimented using log vs normal return, as literatures show conflicting recommendations, we ended up using the normal return based on training experimental results.
+                    We further considered adding additional categorical features and removing some numerical features, and noted the most important feature in addition to permno is the daily return.
+                    For the model experiments, although we did not perform a systematic ablation study, we did experiment with different hyperparameter settings and selected our final model based on model performance by observing the learning curve and the final loss.
+                    </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="img/pipeline/experiments.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
             </div>
         </div>
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Model Results</h2>
+                <h2 class="section-heading text-center">Model Results</h2>
                 <hr class="light" id="add-bottom">
+            </div>
+            <div class="col-lg-8">
                 <p class="text-faded">We trained our model for 10 epochs and observed the learning curves and monitored the metrics. We used Mean Absolute Error (MAE) as our loss and Root Mean Squared Error (RMSE) as our metric. We can see that both train and validation results show promising progression throughout training.</p>
-                <img src="img/pipeline/evaluation.jpg" id="center_small" alt="" style="margin-bottom: 20px;">
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="img/pipeline/evaluation.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
             </div>
         </div>
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Cosine Similarities</h2>
+                <h2 class="section-heading text-center">Cosine Similarities</h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">After the training is completed, we extracted the embeddings for each stock and calculated the cosine similarities among all stocks. Below is an example of the cosine similarities for the first 20 stocks in the dataset.
                 We noted some stocks show negative cosine similarities, which we understand to be unlikely due to the nature of the stock market, but still possible due to competitions and volatility, something we intend to tackle in future iterations. 
                 This cosine similarity matrix replaces the traditional correlation matrix used in portfolio optimization to generate portfolio recommendations by balancing the maximum sharpe ratio and the minimum variance.
                 </p>
-                <img src="img/pipeline/cosine.jpg" id="center_large" alt="" style="margin-bottom: 20px;">
+                <div class="text-center"><img src="img/pipeline/cosine.jpg" id="center_large" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Clustering</h2>
+                <h2 class="section-heading text-center">Clustering</h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">To better visualize the cosine similarities among the stocks, we utilized Principle Components Analaysis (PCA) and t-distributed Stochastic Neighbor Embedding (t-SNE) as the dimensionality reduction technique to visualize the consine similarities among securities on a 2-dimensional space.
                 Here we show the results for two industries, biomedical and financial services industries.
                 We can see a clear clustering pattern in the biomedical sector and some clustering pattern in the financial services sector. Based on our domain expertise, we also reason that the clustering results in the financial services sector is reasonable, since the companies on the left side outside of the cluster, for example KEY, uses a very different operating model and revenue strategy than those inside the cluster on the right side.
                 We also reason that we only used the stock market movements to train our model, and using additional data could yield different results. It is also possible that sector is not the best indicator for clustering. It could be that the companies in the same sector moves in opposite directions in the market due to competition so they are actually more different than companies in different sectors that complement each other.
                 </p>
-                <img src="img/pipeline/cluster.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
+                <div class="text-center"><img src="img/pipeline/cluster.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
     </div>
     <div class="container" id="futureworks">
         <div class="row" id="add-bottom">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading">Future Works</h2>
+                <h2 class="section-heading text-center">Future Works</h2>
                 <hr class="light" id="add-bottom">
-                <ul class="text-faded list-unstyled">
+                <p class="text-faded">We hope you love VIP as much as we do. We are commited to bringing the best tool to retail investors and below are the things I would like to tackle in the next iteration of VIP!</p>
+                <p class="text-faded">User Experience: </p>
+                <ul class="text-faded">
+                    <li><p>Integrate our MVP into the website for a seamless user experience.</p></li>
+                    <li><p>Provide dynamic & more comprehensive recommendations without user specified interested stocks.</p></li>
+                    <li><p>Utilize GenAI to generate natural language output accompanying the numerical results for easier interpretation.</p></li>
+                </ul>
+                <p class="text-faded">Modeling: </p>
+                <ul class="text-faded">
                     <li><p>Use mode advanced architecture, such as Transformers, to generate contextual embeddings.</p></li>
                     <li><p>Generate more robust cosine similarities by incorporating additional features, such as financials, footnotes, and market sentiments.</p></li>
-                    <li><p>Expand our trained embeddings to incorporate stocks outside of S&P500.</p></li>
-                    <li><p>Utilize GenAI to generate natural language output accompanying the numerical results for easier interpretation.</p></li>
+                    <li><p>Expand to stocks outside of S&P500 & more years.</p></li>
                 </ul>
             </div>
         </div>

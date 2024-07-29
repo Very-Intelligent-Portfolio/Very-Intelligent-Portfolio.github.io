@@ -18,6 +18,10 @@ hr.light {
     border-color: white;
 }
 
+li.left {
+    text-align: left;
+}
+
 a {
     @include transition-all;
     color: $theme-primary;
@@ -36,6 +40,14 @@ a.dark {
     }
 }
 
+a.faded {
+    @include transition-all;
+    color: rgba(white, .7);
+    &:hover,
+    &:focus {
+        color: white;
+    }
+}
 
 img#center_cap {
     width: 16%;
