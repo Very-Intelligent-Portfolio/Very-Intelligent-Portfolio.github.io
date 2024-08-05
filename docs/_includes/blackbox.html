@@ -60,14 +60,12 @@
                 <hr class="light">
                 <h2 class="section-heading text-center">Data Pipeline</h2>
                 <hr class="light" id="add-bottom">
-                <p class="text-faded">Below is an overview of our overall pipeline. We start with raw CRSP dataset which contains the daily stock market information for more than 7,000 stocks from 2018 to 2023. 
-                Performed a series of data cleaning by removing or imputing invalid values and keeping only stocks in S&P500.
-                Performed feature engineering to create 9 numerical features, 1 categorical feature, and 5 temporal features, by using the past 128 days data as features and the next day's return as target.
-                However, it is worth noting that even though our target is next day’s return, this is simply a mechanism in which we use to extract the embeddings associated with each stock, our measurement of success is not on how accurate the prediction itself is, but rather on the quality of the embeddings & the cosine similarities calculated using those embeddings.
-                </p>
+                <p class="text-faded">Below is an overview of our overall pipeline. We start with raw CRSP dataset which contains the daily stock market information for more than 7,000 stocks from 2018 to 2023. We Performed a series of data cleaning by removing or imputing invalid values and keeping only stocks in S&P500, and performed a series of feature engineering to create features, this dataset is used for our Prod model shown in the Demo. We also obtained the compustat quarterly fundamentals dataset which includes the financial statement information for S&P500, we cleaned this dataset by filling the missing data from the relevant SEC filings, and then joined the CRSP dataset with the Compustat dataset on security & date. This joined dataset is used for one of our dev models in development.</p>
                 <div class="text-center"><img src="img/pipeline/pipeline.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
-                <p class="text-faded">Even though we did not get to use the Compustat dataset in the current phase, we did prepare the dataset for future works, the pipeline on the secondary dataset Compustat involves first cleaning the Compustat dataset to fill any missing financial data and then join the cleaned Compustat dataset with the cleaned CRSP dataset to produce the joined dataset, with all columns from the cleaned Compustat dataset and the cleaned CRSP dataset.</p>
-                <div class="text-center"><img src="img/pipeline/compustat.jpg" id="center_larger" alt=""></div>
+                <p class="text-faded">Detailed below are the steps we performed to clean and process the CRSP dataset.</p>
+                <div class="text-center"><img src="img/pipeline/crsp.jpg" id="center_small" alt=""></div>
+                <p class="text-faded">Detailed below are the steps we performed to clean and process the Compustat dataset, which is joined to the cleaned CRSP dataset to produce the complete dataset with market and fundamental data.</p>
+                <div class="text-center"><img src="img/pipeline/compustat.jpg" id="center_large" alt=""></div>
             </div>
         </div>
     </div>
@@ -75,22 +73,17 @@
         <div class="row" id="add-bottom">
             <div class="col-lg-12">
                 <hr class="light">
-                <h2 class="section-heading text-center">Model Architecture</h2>
+                <h2 class="section-heading text-center">Baseline</h2>
                 <hr class="light" id="add-bottom">
-                <p class="text-faded">Our model employs a simple architecture as pictured below. We separated our data to numerical features vs categorical features. 
+                <p class="text-faded">Our baseline model employs a simple architecture as pictured below. This takes inspiration from word2vec and treats each Permno (stock identifier) as a word and extracts the static embedding associated with each Permno from the embedding layer. We separated our data to numerical features vs categorical features. 
                 Numerical features are directly passed to multiple multi-headed self-attention layers whereas the categorical features is first pass through an embedding layer to generate the static embeddings associated with each permno, before being passed to multiple multi-headed self-attention layers.
                 The learned representations from both the numerical & embedding features are concatenated to produce the final prediction.
                 As mentioned before, we, however, do not use the predictions for the downstream task, and only use the learned embeddings from the embedding layer for portfolio optimization.
                 </p>
-                <div class="text-center"><img src="img/pipeline/model.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+                <div class="text-center"><img src="img/pipeline/baseline.jpg" id="center_large" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12">
-                <hr class="light">
-                <h2 class="section-heading text-center">Model Experiments</h2>
-                <hr class="light" id="add-bottom">
-            </div>
+        <div class="row">
             <div class="col-lg-8">
                 <p class="text-faded">We experimented both in terms of data and in terms of the model architecture & hyperparameter tuning.
                     During training, we considered both standardization and MinMax scaling and concluded MinMax scaling made more sense due to the large difference in scales among different features.
@@ -103,12 +96,7 @@
                 <img src="img/pipeline/experiments.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
             </div>
         </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12">
-                <hr class="light">
-                <h2 class="section-heading text-center">Model Results</h2>
-                <hr class="light" id="add-bottom">
-            </div>
+        <div class="row">
             <div class="col-lg-8">
                 <p class="text-faded">We trained our model for 10 epochs and observed the learning curves and monitored the metrics. We used Mean Absolute Error (MAE) as our loss and Root Mean Squared Error (RMSE) as our metric. We can see that both train and validation results show promising progression throughout training.</p>
             </div>
@@ -116,29 +104,75 @@
                 <img src="img/pipeline/evaluation.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
             </div>
         </div>
-        <div class="row" id="add-bottom">
-            <div class="col-lg-12">
-                <hr class="light">
-                <h2 class="section-heading text-center">Cosine Similarities</h2>
-                <hr class="light" id="add-bottom">
+        <div class="row">
+            <div class="col-lg-8">
                 <p class="text-faded">After the training is completed, we extracted the embeddings for each stock and calculated the cosine similarities among all stocks. Below is an example of the cosine similarities for the first 20 stocks in the dataset.
-                We noted some stocks show negative cosine similarities, which we understand to be unlikely due to the nature of the stock market, but still possible due to competitions and volatility, something we intend to tackle in future iterations. 
-                This cosine similarity matrix replaces the traditional correlation matrix used in portfolio optimization to generate portfolio recommendations by balancing the maximum sharpe ratio and the minimum variance.
+                    We noted some stocks show negative cosine similarities, which we understand to be unlikely due to the nature of the stock market, but still possible due to competitions and volatility, something we intend to tackle in future iterations. 
+                    This cosine similarity matrix replaces the traditional correlation matrix used in portfolio optimization to generate portfolio recommendations by balancing the maximum sharpe ratio and the minimum variance.
                 </p>
-                <div class="text-center"><img src="img/pipeline/cosine.jpg" id="center_large" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="text-center"><img src="img/pipeline/cosine.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
-        <div class="row" id="add-bottom">
+        <div class="row">
             <div class="col-lg-12">
-                <hr class="light">
-                <h2 class="section-heading text-center">Clustering</h2>
-                <hr class="light" id="add-bottom">
                 <p class="text-faded">To better visualize the cosine similarities among the stocks, we utilized Principle Components Analaysis (PCA) and t-distributed Stochastic Neighbor Embedding (t-SNE) as the dimensionality reduction technique to visualize the consine similarities among securities on a 2-dimensional space.
                 Here we show the results for two industries, biomedical and financial services industries.
                 We can see a clear clustering pattern in the biomedical sector and some clustering pattern in the financial services sector. Based on our domain expertise, we also reason that the clustering results in the financial services sector is reasonable, since the companies on the left side outside of the cluster, for example KEY, uses a very different operating model and revenue strategy than those inside the cluster on the right side.
                 We also reason that we only used the stock market movements to train our model, and using additional data could yield different results. It is also possible that sector is not the best indicator for clustering. It could be that the companies in the same sector moves in opposite directions in the market due to competition so they are actually more different than companies in different sectors that complement each other.
                 </p>
                 <div class="text-center"><img src="img/pipeline/cluster.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12">
+                <hr class="light">
+                <h2 class="section-heading text-center">Minimal Viable Product (MVP) Production Model </h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">The model was developed for the MVP productionalization was inspired by the success of transformers with self-attention in NLP. We created features by including the log return for each permno for each day for 128 days context window, together with the one-hot-encoded permno ids which act as switches that turn on specific feature neurons for predicting individual stocks. The model uses the entire market context (for all stocks within one day) to predict the performance of the target permno for said day. This means teh log return from the last 128 days are used as features to predict the 11 targets of each stock for a given day. 
+                The architecture of the model is largely similar to that of the transformer architecture introduced by <a href="https://arxiv.org/abs/1706.03762" class="dark">Vaswani, etc in "Attention Is All You Need"</a>. We extract the contextual embedding after the transformer block before the last linear layer, and this contextual embedding is the learned representations of all stocks in S&P 500. From the contextual embedding, we extract either the last embedding, which is the contextual embedding at the last time step, or the average embedding, which is the average of the contextual embedding along the time axis. These embeddings are used in place of the correlation matrix in producing the portfolio optimization recommendations.
+                </p>
+                <div class="text-center"><img src="img/pipeline/prod.jpg" id="center_large" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="text-faded">We built our model using the PyTorch ML package and trained our model in AWS SageMaker with a NVIDIA A10G virtual machine with 8 GPUs. The model was trained for 50 epochs with early stopping and completed training in ~4 hours. We utilized MAE as our loss, RAdam as our optimizer, and with a learning rate of 0.00005. </p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="img/pipeline/train_infra.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="text-faded">We evaluate the results of our model by using MAE as the loss and we monitor the learning curve as the model trains. We see that the model continues to improve after 50 epochs, showing promising learning progression.</p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <img src="img/pipeline/loss.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8">
+                <p class="text-faded">We also visualized the predictions against the actuals to visually inspect the quality of the predictions. Here are the actuals vs predictions for 2 of the 11 targets, where we can see the model was able to make reasonably accurate predictions, particularly impressive that the model was able to capture & make predictions on the market downturn during COVID-19.</p>
+            </div>
+            <div class="col-lg-4 text-center">
+                <div class="text-center"><img src="img/pipeline/targets.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="text-faded">Similar to the baseline model, we also plotted the cosine similarity matrix and noted that none of the cosine similarities are below 0, which is in-line with our expectation, where companies in the market generally move in a similar direction with each other. We also visualized the cosine similarities on low dimensional space by utilizing dimensionality reduction technique. Each grey dot represents one company in S&P 500. Highlighted below are companies within the financial services sector, all clusters near each other, again, in-line with our expectation, noting that similar companies should move in similar directions in the market.</p>
+                <div class="row">
+                    <div class="col-lg-6 text-center">
+                        <div class="text-center"><img src="img/pipeline/cosine_prod.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+                    </div>
+                    <div class="col-lg-6 text-center">
+                        <div class="text-center"><img src="img/pipeline/cluster_prod.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
