@@ -133,14 +133,14 @@
                 <h2 class="section-heading text-center">Minimal Viable Product (MVP) Production Model </h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">The model was developed for the MVP productionalization was inspired by the success of transformers with self-attention in NLP. We created features by including the log return for each permno for each day for 128 days context window, together with the one-hot-encoded permno ids which act as switches that turn on specific feature neurons for predicting individual stocks. The model uses the entire market context (for all stocks within one day) to predict the performance of the target permno for said day. This means teh log return from the last 128 days are used as features to predict the 11 targets of each stock for a given day. 
-                The architecture of the model is largely similar to that of the transformer architecture introduced by <a href="https://arxiv.org/abs/1706.03762" class="dark">Vaswani, etc in "Attention Is All You Need"</a>. We extract the contextual embedding after the transformer block before the last linear layer, and this contextual embedding is the learned representations of all stocks in S&P 500. From the contextual embedding, we extract either the last embedding, which is the contextual embedding at the last time step, or the average embedding, which is the average of the contextual embedding along the time axis. These embeddings are used in place of the correlation matrix in producing the portfolio optimization recommendations.
+                The architecture of the model is largely similar to that of the transformer architecture introduced by <a href="https://arxiv.org/abs/1706.03762" class="dark">Vaswani, etc in "Attention Is All You Need"</a>. We extract the contextual embedding after the transformer block before the last linear layer, and this contextual embedding is the learned representations of all stocks in S&P 500. From the contextual embedding, we extract either the last embedding, which is the contextual embedding at the last time step, or the average embedding, which is the average of the contextual embedding along the time axis. These embeddings are used in place of the correlation matrix in producing the portfolio optimization recommendations. Furthermore, our models in development will also incorporate additional market returns and financial fundamentals information into the features for a more comprehensive analysis.
                 </p>
                 <div class="text-center"><img src="img/pipeline/prod.jpg" id="center_large" alt="" style="margin-bottom: 20px;"></div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-8">
-                <p class="text-faded">We built our model using the PyTorch ML package and trained our model in AWS SageMaker with a NVIDIA A10G virtual machine with 8 GPUs. The model was trained for 50 epochs with early stopping and completed training in ~4 hours. We utilized MAE as our loss, RAdam as our optimizer, and with a learning rate of 0.00005. </p>
+                <p class="text-faded">We built our model using the PyTorch ML package and trained our model in AWS SageMaker with a NVIDIA A10G virtual machine with 8 GPUs. The model was trained for 50 epochs with early stopping and completed training in ~4 hours. We utilized MAE as our loss, RAdam as our optimizer, and with a learning rate of 0.00005. Through experiments, we found that predicting 11 targets in one model improves the model’s robustness and generalizability.</p>
             </div>
             <div class="col-lg-4 text-center">
                 <img src="img/pipeline/train_infra.jpg" id="center_larger" alt="" style="margin-bottom: 20px;">
@@ -176,6 +176,20 @@
             </div>
         </div>
     </div>
+    <div class="container">
+        <div class="row" id="add-bottom">
+            <div class="col-lg-12">
+                <hr class="light">
+                <h2 class="section-heading text-center">Models in development</h2>
+                <hr class="light" id="add-bottom">
+                <p class="text-faded">To deliver the best product, we developed two more advanced models by incorporating enriched features like market return context and S&P Compustat financial fundamentals, which show promising performance on smaller datasets.</p>
+                <p class="text-faded">Here we show volatility line graphs of our prod and dev model, both trained on 96 stocks. While both models demonstrate predictive capability for volatility, the dev model demonstrates superior robustness. Particularly, during unexpected volatility spikes in 2019 and late 2023, shown by the purple arrows, the dev model more effectively captures these events due to its increased market context.
+                    This performance underscores the potential of the dev model, particularly when scaled to a larger dataset to further validate and enhance its predictive power.
+                </p>   
+                <div class="text-center"><img src="img/pipeline/compare.jpg" id="center_larger" alt="" style="margin-bottom: 20px;"></div>
+            </div>
+        </div>
+    </div>
     <div class="container" id="futureworks">
         <div class="row" id="add-bottom">
             <div class="col-lg-12">
@@ -183,17 +197,18 @@
                 <h2 class="section-heading text-center">Future Works</h2>
                 <hr class="light" id="add-bottom">
                 <p class="text-faded">We hope you love VIP as much as we do. We are commited to bringing the best tool to retail investors and below are the things I would like to tackle in the next iteration of VIP!</p>
-                <p class="text-faded">User Experience: </p>
-                <ul class="text-faded">
-                    <li><p>Integrate our MVP into the website for a seamless user experience.</p></li>
-                    <li><p>Provide dynamic & more comprehensive recommendations without user specified interested stocks.</p></li>
-                    <li><p>Utilize GenAI to generate natural language output accompanying the numerical results for easier interpretation.</p></li>
-                </ul>
                 <p class="text-faded">Modeling: </p>
                 <ul class="text-faded">
-                    <li><p>Use mode advanced architecture, such as Transformers, to generate contextual embeddings.</p></li>
-                    <li><p>Generate more robust cosine similarities by incorporating additional features, such as financials, footnotes, and market sentiments.</p></li>
+                    <li><p>Productionalize the models in dev phase.</p></li>
+                    <li><p>Productionalize the models in dev phase, such as footnotes, earnings release, and market sentiments.</p></li>
                     <li><p>Expand to stocks outside of S&P500 & more years.</p></li>
+                </ul>
+                <p class="text-faded">User Experience: </p>
+                <ul class="text-faded">
+                    <li><p>Website integration of our production and development models for a seamless user experience.</p></li>
+                    <li><p>Provide dynamic & more comprehensive recommendations without user specified interested stocks.</p></li>
+                    <li><p>Utilize GenAI to generate natural language output accompanying the numerical results for easier interpretation.</p></li>
+                    <li><p>Conduct user acceptance testing.</p></li>
                 </ul>
             </div>
         </div>
